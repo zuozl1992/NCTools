@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
+<context>
+    <name>AppController</name>
+    <message>
+        <source>发送框为空</source>
+        <translation>发送框为空</translation>
+    </message>
+    <message>
+        <source>文件保存失败</source>
+        <translation>文件保存失败</translation>
+    </message>
+    <message>
+        <source>未选择文件</source>
+        <translation>未选择文件</translation>
+    </message>
+    <message>
+        <source>文件打开失败</source>
+        <translation>文件打开失败</translation>
+    </message>
+    <message>
+        <source>端口不能为空</source>
+        <translation>端口不能为空</translation>
+    </message>
+    <message>
+        <source>端口不能重复</source>
+        <translation>端口不能重复</translation>
+    </message>
+    <message>
+        <source>请输入时间</source>
+        <translation>请输入时间</translation>
+    </message>
+    <message>
+        <source>没有活动的连接</source>
+        <translation>没有活动的连接</translation>
+    </message>
+    <message>
+        <source>串口未打开</source>
+        <translation>串口未打开</translation>
+    </message>
+    <message>
+        <source>请输入对方ip和端口</source>
+        <translation>请输入对方ip和端口</translation>
+    </message>
+    <message>
+        <source>未连接服务器</source>
+        <translation>未连接服务器</translation>
+    </message>
+    <message>
+        <source>没有已连接的客户端</source>
+        <translation>没有已连接的客户端</translation>
+    </message>
+    <message>
+        <source>[文件发送开始] %1 (%2 字节)</source>
+        <translation>[文件发送开始] %1 (%2 字节)</translation>
+    </message>
+    <message>
+        <source>[文件发送完成] 共发送 %1 字节</source>
+        <translation>[文件发送完成] 共发送 %1 字节</translation>
+    </message>
+    <message>
+        <source>[文件发送失败] 已发送 %1 / %2 字节</source>
+        <translation>[文件发送失败] 已发送 %1 / %2 字节</translation>
+    </message>
+</context>
+<context>
+    <name>Main</name>
+    <message>
+        <source>MySSCOM - 串口网络调试工具</source>
+        <translation>MySSCOM - 串口网络调试工具</translation>
+    </message>
+    <message>
+        <source>帮助(&amp;H)</source>
+        <translation>帮助(&amp;H)</translation>
+    </message>
+    <message>
+        <source>关于(&amp;A)</source>
+        <translation>关于(&amp;A)</translation>
+    </message>
+    <message>
+        <source>语言</source>
+        <translation>语言</translation>
+    </message>
+</context>
+<context>
+    <name>MyToolBar</name>
+    <message>
+        <source>清空</source>
+        <translation>清空</translation>
+    </message>
+    <message>
+        <source>保存</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>打开文件</source>
+        <translation>打开文件</translation>
+    </message>
+    <message>
+        <source>选择文件...</source>
+        <translation>选择文件...</translation>
+    </message>
+    <message>
+        <source>发送文件</source>
+        <translation>发送文件</translation>
+    </message>
+    <message>
+        <source>扩展</source>
+        <translation>扩展</translation>
+    </message>
+</context>
+<context>
+    <name>HeaderBar</name>
+    <message>
+        <source>连接模式:</source>
+        <translation>连接模式:</translation>
+    </message>
+    <message>
+        <source>串口</source>
+        <translation>串口</translation>
+    </message>
+    <message>
+        <source>TCP Server</source>
+        <translation>TCP Server</translation>
+    </message>
+    <message>
+        <source>TCP Client</source>
+        <translation>TCP Client</translation>
+    </message>
+    <message>
+        <source>UDP</source>
+        <translation>UDP</translation>
+    </message>
+    <message>
+        <source>手动输入端口</source>
+        <translation>手动输入端口</translation>
+    </message>
+    <message>
+        <source>添加</source>
+        <translation>添加</translation>
+    </message>
+    <message>
+        <source>刷新</source>
+        <translation>刷新</translation>
+    </message>
+</context>
+<context>
+    <name>SerialConfigPanel</name>
+    <message>
+        <source>串口配置</source>
+        <translation>串口配置</translation>
+    </message>
+    <message>
+        <source>端口:</source>
+        <translation>端口:</translation>
+    </message>
+    <message>
+        <source>波特率:</source>
+        <translation>波特率:</translation>
+    </message>
+    <message>
+        <source>更多设置</source>
+        <translation>更多设置</translation>
+    </message>
+    <message>
+        <source>打开串口</source>
+        <translation>打开串口</translation>
+    </message>
+    <message>
+        <source>关闭串口</source>
+        <translation>关闭串口</translation>
+    </message>
+    <message>
+        <source>请选择串口</source>
+        <translation>请选择串口</translation>
+    </message>
+</context>
+<context>
+    <name>TcpServerConfigPanel</name>
+    <message>
+        <source>TCP Server 配置</source>
+        <translation>TCP Server 配置</translation>
+    </message>
+    <message>
+        <source>监听端口:</source>
+        <translation>监听端口:</translation>
+    </message>
+    <message>
+        <source>启动服务器</source>
+        <translation>启动服务器</translation>
+    </message>
+    <message>
+        <source>停止服务器</source>
+        <translation>停止服务器</translation>
+    </message>
+    <message>
+        <source>请输入监听端口</source>
+        <translation>请输入监听端口</translation>
+    </message>
+</context>
+<context>
+    <name>TcpClientConfigPanel</name>
+    <message>
+        <source>TCP Client 配置</source>
+        <translation>TCP Client 配置</translation>
+    </message>
+    <message>
+        <source>服务器IP:</source>
+        <translation>服务器IP:</translation>
+    </message>
+    <message>
+        <source>端口:</source>
+        <translation>端口:</translation>
+    </message>
+    <message>
+        <source>连接服务器</source>
+        <translation>连接服务器</translation>
+    </message>
+    <message>
+        <source>断开连接</source>
+        <translation>断开连接</translation>
+    </message>
+    <message>
+        <source>请输入服务器IP和端口</source>
+        <translation>请输入服务器IP和端口</translation>
+    </message>
+</context>
+<context>
+    <name>UdpConfigPanel</name>
+    <message>
+        <source>UDP 配置</source>
+        <translation>UDP 配置</translation>
+    </message>
+    <message>
+        <source>本地（接收）</source>
+        <translation>本地（接收）</translation>
+    </message>
+    <message>
+        <source>端口:</source>
+        <translation>端口:</translation>
+    </message>
+    <message>
+        <source>远程（发送）</source>
+        <translation>远程（发送）</translation>
+    </message>
+    <message>
+        <source>IP:</source>
+        <translation>IP:</translation>
+    </message>
+    <message>
+        <source>绑定（接收）</source>
+        <translation>绑定（接收）</translation>
+    </message>
+    <message>
+        <source>解绑</source>
+        <translation>解绑</translation>
+    </message>
+    <message>
+        <source>请输入本地端口</source>
+        <translation>请输入本地端口</translation>
+    </message>
+    <message>
+        <source>提示：绑定本地端口用于接收数据；发送数据只需填写远程IP和端口，无需绑定。</source>
+        <translation>提示：绑定本地端口用于接收数据；发送数据只需填写远程IP和端口，无需绑定。</translation>
+    </message>
+</context>
+<context>
+    <name>SendPanel</name>
+    <message>
+        <source>输入HEX数据，如: 48 65 6C 6C 6F</source>
+        <translation>输入HEX数据，如: 48 65 6C 6C 6F</translation>
+    </message>
+    <message>
+        <source>输入要发送的数据...</source>
+        <translation>输入要发送的数据...</translation>
+    </message>
+    <message>
+        <source>发送</source>
+        <translation>发送</translation>
+    </message>
+</context>
+<context>
+    <name>StatusBar</name>
+    <message>
+        <source>已连接</source>
+        <translation>已连接</translation>
+    </message>
+    <message>
+        <source>未连接</source>
+        <translation>未连接</translation>
+    </message>
+    <message>
+        <source>串口</source>
+        <translation>串口</translation>
+    </message>
+</context>
+<context>
+    <name>AboutDialog</name>
+    <message>
+        <source>关于 MySSCOM</source>
+        <translation>关于 MySSCOM</translation>
+    </message>
+    <message>
+        <source>MySSCOM</source>
+        <translation>MySSCOM</translation>
+    </message>
+    <message>
+        <source>版本 2.0</source>
+        <translation>版本 2.0</translation>
+    </message>
+    <message>
+        <source>串口网络调试工具</source>
+        <translation>串口网络调试工具</translation>
+    </message>
+    <message>
+        <source>支持串口、TCP Server、TCP Client、UDP 通信</source>
+        <translation>支持串口、TCP Server、TCP Client、UDP 通信</translation>
+    </message>
+</context>
+<context>
+    <name>SerialSettingsDialog</name>
+    <message>
+        <source>串口高级设置</source>
+        <translation>串口高级设置</translation>
+    </message>
+    <message>
+        <source>数据位:</source>
+        <translation>数据位:</translation>
+    </message>
+    <message>
+        <source>停止位:</source>
+        <translation>停止位:</translation>
+    </message>
+    <message>
+        <source>校验位:</source>
+        <translation>校验位:</translation>
+    </message>
+    <message>
+        <source>流控制:</source>
+        <translation>流控制:</translation>
+    </message>
+</context>
+<context>
+    <name>QuickSendPanel</name>
+    <message>
+        <source>快速发送面板</source>
+        <translation>快速发送面板</translation>
+    </message>
+    <message>
+        <source>数据</source>
+        <translation>数据</translation>
+    </message>
+    <message>
+        <source>Hex</source>
+        <translation>Hex</translation>
+    </message>
+    <message>
+        <source>操作</source>
+        <translation>操作</translation>
+    </message>
+    <message>
+        <source>发送</source>
+        <translation>发送</translation>
+    </message>
+    <message>
+        <source>输入数据</source>
+        <translation>输入数据</translation>
+    </message>
+</context>
+<context>
+    <name>FileSendProgress</name>
+    <message>
+        <source>文件发送进度:</source>
+        <translation>文件发送进度:</translation>
+    </message>
+</context>
+</TS>
