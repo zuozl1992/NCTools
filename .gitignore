@@ -1,1 +1,45 @@
-.git.tar
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Qt / CMake generated
+build/
+build-*/
+build*/
+.cache/
+.qmake.stash
+Makefile
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.qm
+*.moc
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+*.prl
+*.app
+*.qbs.user
+*.pro.user
+CMakeLists.txt.user
+.qmake.cache
+.qmake.stash
+
+# IDE / tooling
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.pyc
