@@ -18,6 +18,8 @@ MySSCOM 是一款功能强大的串口网络调试工具，专为嵌入式开发
 
 本项目使用 [MiMoCode](https://github.com/anthropics/claude-code) 进行代码重构，采用模块化架构设计，实现了界面与逻辑的完全分离。
 
+![界面示例](assets/iShot_2026-07-08_10.08.40.png)
+
 ## ✨ 功能特性
 
 ### 🔌 多种通信方式
