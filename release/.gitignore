@@ -1,0 +1,13 @@
+# Build artifacts
+build/
+
+# Output packages
+output/
+
+# macOS specific
+.DS_Store
+*.dmg
+
+# Temporary files
+*.tmp
+*.log

@@ -1,7 +1,10 @@
 # Application executable
+set(ICON_FILE "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.icns")
+
 qt_add_executable(MySSCOM
     WIN32 MACOSX_BUNDLE
     main.cpp
+    ${ICON_FILE}
 )
 
 # QML files from local directory
@@ -29,10 +32,11 @@ qt_add_qml_module(MySSCOM
 )
 
 set_target_properties(MySSCOM PROPERTIES
-    MACOSX_BUNDLE_ICON_FILE control.png
+    MACOSX_BUNDLE_ICON_FILE AppIcon.icns
     MACOSX_BUNDLE_BUNDLE_NAME "MySSCOM"
     MACOSX_BUNDLE_BUNDLE_VERSION "2.0"
     MACOSX_BUNDLE_SHORT_VERSION_STRING "2.0"
+    RESOURCE "${ICON_FILE}"
 )
 
 qt_add_translations(

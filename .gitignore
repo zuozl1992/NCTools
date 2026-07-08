@@ -36,6 +36,10 @@ CMakeLists.txt.user
 .qmake.cache
 .qmake.stash
 
+# Release build artifacts
+release/build/
+release/output/
+
 # IDE / tooling
 .vscode/
 .idea/
