@@ -8,7 +8,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Qt Version](https://img.shields.io/badge/Qt-6.8.3-green.svg)](https://www.qt.io)
-[![Platform](https://img.shields.io/badge/Platform-mOS-lightgrey.svg)](https://www.apple.com/macos/)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-lightgrey.svg)](https://www.qt.io)
 
 </div>
 
@@ -60,9 +60,11 @@ NCTools 是一款功能强大的串口网络调试工具，专为嵌入式开发
 
 ## 🖥️ 系统要求
 
-- **操作系统**：macOS 12.0 或更高版本
+- **操作系统**：Windows 10+ 或 macOS 12.0+
 - **Qt 版本**：Qt 6.8.3
-- **编译器**：Xcode Command Line Tools (Apple Clang)
+- **编译器**：
+  - Windows: MSVC 2019+ 或 MinGW 12+
+  - macOS: Xcode Command Line Tools (Apple Clang)
 - **构建工具**：CMake 3.19+
 
 ## 📦 安装与构建
@@ -71,12 +73,16 @@ NCTools 是一款功能强大的串口网络调试工具，专为嵌入式开发
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/NCTools.git
+git clone https://github.com/zuozl1992/NCTools.git
 cd NCTools
 
 # 创建构建目录
 mkdir build && cd build
+```
 
+#### macOS
+
+```bash
 # 配置 CMake（指定 Qt 安装路径）
 cmake .. -DCMAKE_PREFIX_PATH=~/Qt/6.8.3/macos
 
@@ -85,6 +91,19 @@ cmake --build .
 
 # 运行
 ./src/app/NCTools.app/Contents/MacOS/NCTools
+```
+
+#### Windows
+
+```cmd
+# 配置 CMake（指定 Qt 安装路径）
+cmake .. -DCMAKE_PREFIX_PATH=C:/Qt/6.8.3/msvc2019_64
+
+# 编译
+cmake --build . --config Release
+
+# 运行
+.\src\app\Release\NCTools.exe
 ```
 
 ### 安装 Qt

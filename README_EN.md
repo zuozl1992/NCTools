@@ -8,7 +8,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Qt Version](https://img.shields.io/badge/Qt-6.8.3-green.svg)](https://www.qt.io)
-[![Platform](https://img.shields.io/badge/Platform-mOS-lightgrey.svg)](https://www.apple.com/macos/)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS-lightgrey.svg)](https://www.qt.io)
 
 </div>
 
@@ -60,9 +60,11 @@ This project uses [MiMoCode](https://github.com/anthropics/claude-code) for code
 
 ## 🖥️ System Requirements
 
-- **Operating System**: macOS 12.0 or higher
+- **Operating System**: Windows 10+ or macOS 12.0+
 - **Qt Version**: Qt 6.8.3
-- **Compiler**: Xcode Command Line Tools (Apple Clang)
+- **Compiler**:
+  - Windows: MSVC 2019+ or MinGW 12+
+  - macOS: Xcode Command Line Tools (Apple Clang)
 - **Build Tool**: CMake 3.19+
 
 ## 📦 Installation & Build
@@ -71,12 +73,16 @@ This project uses [MiMoCode](https://github.com/anthropics/claude-code) for code
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/NCTools.git
+git clone https://github.com/zuozl1992/NCTools.git
 cd NCTools
 
 # Create build directory
 mkdir build && cd build
+```
 
+#### macOS
+
+```bash
 # Configure CMake (specify Qt installation path)
 cmake .. -DCMAKE_PREFIX_PATH=~/Qt/6.8.3/macos
 
@@ -87,11 +93,24 @@ cmake --build .
 ./src/app/NCTools.app/Contents/MacOS/NCTools
 ```
 
+#### Windows
+
+```cmd
+# Configure CMake (specify Qt installation path)
+cmake .. -DCMAKE_PREFIX_PATH=C:/Qt/6.8.3/msvc2019_64
+
+# Build
+cmake --build . --config Release
+
+# Run
+.\src\app\Release\NCTools.exe
+```
+
 ### Install Qt
 
 1. Download Qt Online Installer from [Qt official website](https://www.qt.io/download)
 2. Install Qt 6.8.3, select the following components:
-   - Qt 6.8.3 for macOS
+   - Qt 6.8.3 for macOS or Windows
    - Qt SerialPort
    - Qt Network
 
