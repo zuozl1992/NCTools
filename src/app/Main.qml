@@ -192,7 +192,7 @@ ApplicationWindow {
 
                     TextField {
                         id: leInterval
-                        width: 60
+                        width: 80
                         text: AppController.settings.autoSendInterval.toString()
                         placeholderText: "ms"
                         validator: IntValidator { bottom: 10 }
