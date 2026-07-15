@@ -68,6 +68,7 @@ void SettingsManager::save()
     // 保存连接配置
     settings.beginGroup("General");
     settings.setValue("connectionType", m_connectionType);
+    settings.setValue("language", m_language);
     settings.endGroup();
 
     // 保存快速发送条目
@@ -131,6 +132,7 @@ void SettingsManager::load()
     // 加载连接配置
     settings.beginGroup("General");
     m_connectionType = settings.value("connectionType", 0).toInt();
+    m_language = settings.value("language", "zh_CN").toString();
     settings.endGroup();
 
     // 加载快速发送条目
@@ -301,6 +303,15 @@ void SettingsManager::setConnectionType(int type)
     if (m_connectionType != type) {
         m_connectionType = type;
         emit connectionTypeChanged();
+    }
+}
+
+// ==================== 语言设置器 ====================
+void SettingsManager::setLanguage(const QString &language)
+{
+    if (m_language != language) {
+        m_language = language;
+        emit languageChanged();
     }
 }
 

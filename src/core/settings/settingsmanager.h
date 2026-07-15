@@ -47,6 +47,9 @@ class SettingsManager : public QObject
     // ==================== 连接设置 ====================
     Q_PROPERTY(int connectionType READ connectionType WRITE setConnectionType NOTIFY connectionTypeChanged) ///< 连接类型
 
+    // ==================== 语言设置 ====================
+    Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged) ///< 界面语言
+
     // ==================== 快速发送设置 ====================
     Q_PROPERTY(QVariantList quickSendEntries READ quickSendEntries WRITE setQuickSendEntries NOTIFY quickSendEntriesChanged) ///< 快速发送条目
 
@@ -113,6 +116,10 @@ public:
     int connectionType() const { return m_connectionType; }
     void setConnectionType(int type);
 
+    // ---- 语言属性 ----
+    QString language() const { return m_language; }
+    void setLanguage(const QString &language);
+
     // ---- 快速发送属性 ----
     QVariantList quickSendEntries() const { return m_quickSendEntries; }
     void setQuickSendEntries(const QVariantList &entries);
@@ -148,6 +155,9 @@ signals:
 
     // ---- 连接信号 ----
     void connectionTypeChanged();                         ///< 连接类型变更
+
+    // ---- 语言信号 ----
+    void languageChanged();                               ///< 界面语言变更
 
     // ---- 快速发送信号 ----
     void quickSendEntriesChanged();                       ///< 快速发送条目变更
@@ -185,6 +195,9 @@ private:
 
     // ==================== 连接配置 ====================
     int m_connectionType = 0;                             ///< 连接类型
+
+    // ==================== 语言配置 ====================
+    QString m_language = "zh_CN";                         ///< 界面语言（默认中文）
 
     // ==================== 快速发送配置 ====================
     QVariantList m_quickSendEntries;                      ///< 快速发送条目列表
