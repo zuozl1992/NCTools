@@ -2,8 +2,6 @@
 #include <QGuiApplication>
 #include <QQmlEngine>
 #include <QLocale>
-#include <QDebug>
-#include <QFile>
 
 static LanguageManager *s_instance = nullptr;
 
@@ -62,17 +60,9 @@ void LanguageManager::loadTranslation(const QString &language)
     // 移除旧的翻译器
     m_app->removeTranslator(m_translator);
 
-    // 加载新的翻译文件（资源路径）
+    // 加载新的翻译文件
     QString translationFile = QString(":/i18n/NCTools_%1.qm").arg(language);
-    qDebug() << "Loading translation from:" << translationFile;
-    qDebug() << "Translation exists:" << QFile::exists(translationFile);
-
     if (m_translator->load(translationFile)) {
         m_app->installTranslator(m_translator);
-        qDebug() << "Translation loaded successfully";
-        // 测试翻译是否生效
-        qDebug() << "Test translate '串口':" << m_translator->translate("StatusBar", "串口");
-    } else {
-        qDebug() << "Failed to load translation";
     }
 }

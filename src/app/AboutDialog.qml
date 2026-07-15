@@ -11,7 +11,8 @@ Dialog {
     }
     modal: true
     standardButtons: Dialog.Ok
-    anchors.centerIn: Overlay.overlay
+    x: Math.round((parent.width - width) / 2)
+    y: Math.round((parent.height - height) / 2)
 
     function tr(text) {
         var _ = LanguageManager.currentLanguage

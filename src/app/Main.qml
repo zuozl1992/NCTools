@@ -254,10 +254,14 @@ ApplicationWindow {
 
     Dialog {
         id: errorDialog
-        title: "警告"
+        title: {
+            var _ = LanguageManager.currentLanguage
+            return qsTr("警告")
+        }
         modal: true
         standardButtons: Dialog.Ok
-        anchors.centerIn: Overlay.overlay
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
         property alias text: errorLabel.text
         Label {
             id: errorLabel

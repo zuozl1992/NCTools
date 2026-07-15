@@ -11,7 +11,8 @@ Dialog {
     }
     modal: true
     standardButtons: Dialog.Ok | Dialog.Cancel
-    anchors.centerIn: parent
+    x: Math.round((parent.width - width) / 2)
+    y: Math.round((parent.height - height) / 2)
 
     property int dataBits: 8
     property int stopBits: 1
