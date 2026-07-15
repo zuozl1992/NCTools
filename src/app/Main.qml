@@ -133,28 +133,40 @@ ApplicationWindow {
 
                     CheckBox {
                         id: cbHexShow
-                        text: "Hex显示"
+                        text: {
+                            var _ = LanguageManager.currentLanguage
+                            return qsTr("Hex显示")
+                        }
                         checked: AppController.settings.hexShow
                         onCheckedChanged: AppController.settings.hexShow = checked
                     }
 
                     CheckBox {
                         id: cbHexSend
-                        text: "Hex发送"
+                        text: {
+                            var _ = LanguageManager.currentLanguage
+                            return qsTr("Hex发送")
+                        }
                         checked: AppController.settings.hexSend
                         onCheckedChanged: AppController.settings.hexSend = checked
                     }
 
                     CheckBox {
                         id: cbAutoClear
-                        text: "发送后清空"
+                        text: {
+                            var _ = LanguageManager.currentLanguage
+                            return qsTr("发送后清空")
+                        }
                         checked: AppController.settings.autoClearSend
                         onCheckedChanged: AppController.settings.autoClearSend = checked
                     }
 
                     CheckBox {
                         id: cbTimestamp
-                        text: "加时间戳"
+                        text: {
+                            var _ = LanguageManager.currentLanguage
+                            return qsTr("加时间戳")
+                        }
                         checked: AppController.settings.addTimestamp
                         onCheckedChanged: AppController.settings.addTimestamp = checked
                     }
@@ -163,7 +175,10 @@ ApplicationWindow {
 
                     CheckBox {
                         id: cbAutoSend
-                        text: "定时发送"
+                        text: {
+                            var _ = LanguageManager.currentLanguage
+                            return qsTr("定时发送")
+                        }
                         checked: AppController.settings.autoSend
                         onCheckedChanged: {
                             AppController.settings.autoSend = checked

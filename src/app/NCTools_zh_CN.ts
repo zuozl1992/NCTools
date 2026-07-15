@@ -82,6 +82,30 @@
         <source>语言</source>
         <translation>语言</translation>
     </message>
+    <message>
+        <source>Hex显示</source>
+        <translation>Hex显示</translation>
+    </message>
+    <message>
+        <source>Hex发送</source>
+        <translation>Hex发送</translation>
+    </message>
+    <message>
+        <source>发送后清空</source>
+        <translation>发送后清空</translation>
+    </message>
+    <message>
+        <source>加时间戳</source>
+        <translation>加时间戳</translation>
+    </message>
+    <message>
+        <source>定时发送</source>
+        <translation>定时发送</translation>
+    </message>
+    <message>
+        <source>警告</source>
+        <translation>警告</translation>
+    </message>
 </context>
 <context>
     <name>MyToolBar</name>
