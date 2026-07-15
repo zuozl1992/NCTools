@@ -1,8 +1,8 @@
-# MySSCOM - 串口网络调试工具
+# NCTools - 串口网络调试工具
 
 <div align="center">
 
-![MySSCOM](resources/control.png)
+![NCTools](resources/control.png)
 
 **一款跨平台的串口网络调试工具，支持串口、TCP Server、TCP Client、UDP 通信**
 
@@ -16,7 +16,7 @@
 
 ## 📖 简介
 
-MySSCOM 是一款功能强大的串口网络调试工具，专为嵌入式开发、设备调试和通信测试而设计。软件采用现代化的 QML 界面，支持多种通信方式，提供直观的数据收发和分析功能。
+NCTools 是一款功能强大的串口网络调试工具，专为嵌入式开发、设备调试和通信测试而设计。软件采用现代化的 QML 界面，支持多种通信方式，提供直观的数据收发和分析功能。
 
 本项目使用 [MiMoCode](https://github.com/anthropics/claude-code) 进行代码重构，采用模块化架构设计，实现了界面与逻辑的完全分离。
 
@@ -71,8 +71,8 @@ MySSCOM 是一款功能强大的串口网络调试工具，专为嵌入式开发
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/MySSCOM.git
-cd MySSCOM
+git clone https://github.com/yourusername/NCTools.git
+cd NCTools
 
 # 创建构建目录
 mkdir build && cd build
@@ -84,7 +84,7 @@ cmake .. -DCMAKE_PREFIX_PATH=~/Qt/6.8.3/macos
 cmake --build .
 
 # 运行
-./src/app/MySSCOM.app/Contents/MacOS/MySSCOM
+./src/app/NCTools.app/Contents/MacOS/NCTools
 ```
 
 ### 安装 Qt
@@ -98,7 +98,7 @@ cmake --build .
 ## 🏗️ 项目结构
 
 ```
-MySSCOM/
+NCTools/
 ├── CMakeLists.txt                    # 顶层构建文件
 ├── cmake/                            # CMake 辅助脚本
 │   └── QtVersionCheck.cmake
@@ -232,7 +232,7 @@ class AbstractTransport : public QObject {
 本项目采用 [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0) 许可证。
 
 ```
-Copyright (C) 2024 MySSCOM
+Copyright (C) 2024 NCTools
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

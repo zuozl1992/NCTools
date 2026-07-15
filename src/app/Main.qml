@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Dialogs
-import MySSCOM 1.0
+import NCTools 1.0
 
 ApplicationWindow {
     id: root
@@ -11,7 +11,7 @@ ApplicationWindow {
     visible: true
     title: {
         var _ = LanguageManager.currentLanguage
-        return qsTr("MySSCOM - 串口网络调试工具")
+        return qsTr("NCTools - 串口网络调试工具")
     }
     color: "#f5f5f5"
 

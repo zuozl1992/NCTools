@@ -1,7 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import MySSCOM 1.0
+import NCTools 1.0
 
 Rectangle {
     id: root
@@ -68,7 +68,7 @@ Rectangle {
         Item { Layout.fillWidth: true }
 
         Label {
-            text: "MySSCOM v2.0"
+            text: "NCTools v2.0"
             font.pixelSize: 11
             color: "#666666"
         }

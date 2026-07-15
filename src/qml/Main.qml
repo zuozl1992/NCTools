@@ -2,14 +2,14 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Dialogs
-import MySSCOM 1.0
+import NCTools 1.0
 
 ApplicationWindow {
     id: root
     width: 900
     height: 650
     visible: true
-    title: "MySSCOM - 串口网络调试工具"
+    title: "NCTools - 串口网络调试工具"
     color: Style.backgroundColor
 
     // Menu bar

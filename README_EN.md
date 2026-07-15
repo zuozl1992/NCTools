@@ -1,8 +1,8 @@
-# MySSCOM - Serial Network Debugging Tool
+# NCTools - Serial Network Debugging Tool
 
 <div align="center">
 
-![MySSCOM](resources/control.png)
+![NCTools](resources/control.png)
 
 **A cross-platform serial network debugging tool supporting Serial, TCP Server, TCP Client, and UDP communication**
 
@@ -16,7 +16,7 @@
 
 ## 📖 Introduction
 
-MySSCOM is a powerful serial network debugging tool designed for embedded development, device debugging, and communication testing. The software features a modern QML interface, supports multiple communication methods, and provides intuitive data transmission and analysis capabilities.
+NCTools is a powerful serial network debugging tool designed for embedded development, device debugging, and communication testing. The software features a modern QML interface, supports multiple communication methods, and provides intuitive data transmission and analysis capabilities.
 
 This project uses [MiMoCode](https://github.com/anthropics/claude-code) for code refactoring, adopting a modular architecture design that achieves complete separation of interface and logic.
 
@@ -71,8 +71,8 @@ This project uses [MiMoCode](https://github.com/anthropics/claude-code) for code
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/MySSCOM.git
-cd MySSCOM
+git clone https://github.com/yourusername/NCTools.git
+cd NCTools
 
 # Create build directory
 mkdir build && cd build
@@ -84,7 +84,7 @@ cmake .. -DCMAKE_PREFIX_PATH=~/Qt/6.8.3/macos
 cmake --build .
 
 # Run
-./src/app/MySSCOM.app/Contents/MacOS/MySSCOM
+./src/app/NCTools.app/Contents/MacOS/NCTools
 ```
 
 ### Install Qt
@@ -98,7 +98,7 @@ cmake --build .
 ## 🏗️ Project Structure
 
 ```
-MySSCOM/
+NCTools/
 ├── CMakeLists.txt                    # Top-level build file
 ├── cmake/                            # CMake helper scripts
 │   └── QtVersionCheck.cmake
@@ -232,7 +232,7 @@ Welcome to submit Issues and Pull Requests!
 This project is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0).
 
 ```
-Copyright (C) 2024 MySSCOM
+Copyright (C) 2024 NCTools
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

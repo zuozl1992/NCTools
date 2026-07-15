@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     // 创建GUI应用
     QGuiApplication app(argc, argv);
     app.setWindowIcon(QIcon(":/control.png"));
-    app.setApplicationName("MySSCOM");
+    app.setApplicationName("NCTools");
     app.setApplicationVersion("2.0");
 
     // 设置QML样式
@@ -36,13 +36,13 @@ int main(int argc, char *argv[])
     AppController appController;
 
     // 注册C++类型到QML
-    qmlRegisterSingletonInstance("MySSCOM", 1, 0, "AppController", &appController);
-    qmlRegisterSingletonInstance("MySSCOM", 1, 0, "Settings", SettingsManager::instance());
-    qmlRegisterSingletonInstance("MySSCOM", 1, 0, "LanguageManager", LanguageManager::instance());
-    qmlRegisterType<QuickSendModel>("MySSCOM", 1, 0, "QuickSendModel");
+    qmlRegisterSingletonInstance("NCTools", 1, 0, "AppController", &appController);
+    qmlRegisterSingletonInstance("NCTools", 1, 0, "Settings", SettingsManager::instance());
+    qmlRegisterSingletonInstance("NCTools", 1, 0, "LanguageManager", LanguageManager::instance());
+    qmlRegisterType<QuickSendModel>("NCTools", 1, 0, "QuickSendModel");
 
     // 加载主QML文件
-    const QUrl url(QStringLiteral("qrc:/MySSCOM/Main.qml"));
+    const QUrl url(QStringLiteral("qrc:/NCTools/Main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

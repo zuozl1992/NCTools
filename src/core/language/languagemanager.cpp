@@ -63,7 +63,7 @@ void LanguageManager::loadTranslation(const QString &language)
     m_app->removeTranslator(m_translator);
 
     // 加载新的翻译文件（资源路径）
-    QString translationFile = QString(":/i18n/MySSCOM_%1.qm").arg(language);
+    QString translationFile = QString(":/i18n/NCTools_%1.qm").arg(language);
     qDebug() << "Loading translation from:" << translationFile;
     qDebug() << "Translation exists:" << QFile::exists(translationFile);
 

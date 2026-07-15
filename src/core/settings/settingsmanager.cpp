@@ -21,9 +21,9 @@ SettingsManager *SettingsManager::instance()
 
 void SettingsManager::save()
 {
-    // 配置文件路径：~/Library/Application Support/MySSCOM/config.ini
+    // 配置文件路径：~/Library/Application Support/NCTools/config.ini
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
-                         + "/MySSCOM";
+                         + "/NCTools";
     QDir().mkpath(configPath);
     QSettings settings(configPath + "/config.ini", QSettings::IniFormat);
 
@@ -84,7 +84,7 @@ void SettingsManager::save()
 void SettingsManager::load()
 {
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
-                         + "/MySSCOM/config.ini";
+                         + "/NCTools/config.ini";
     if (!QFile::exists(configPath))
         return;
 

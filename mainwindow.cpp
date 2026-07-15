@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     , expPanel(nullptr)
 {
     ui->setupUi(this);
-    setWindowTitle(tr("MySSCOM - 串口网络调试工具"));
+    setWindowTitle(tr("NCTools - 串口网络调试工具"));
 
     QMenu *helpMenu = menuBar()->addMenu(tr("帮助(&H)"));
     QAction *aboutAction = helpMenu->addAction(tr("关于(&A)"));
@@ -248,7 +248,7 @@ void MainWindow::initExpPanel()
 void MainWindow::saveSettings()
 {
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
-                         + "/MySSCOM";
+                         + "/NCTools";
     QDir().mkpath(configPath);
     QSettings settings(configPath + "/config.ini", QSettings::IniFormat);
 
@@ -313,7 +313,7 @@ void MainWindow::saveSettings()
 void MainWindow::loadSettings()
 {
     QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
-                         + "/MySSCOM/config.ini";
+                         + "/NCTools/config.ini";
     if(!QFile::exists(configPath))
         return;
     QSettings settings(configPath, QSettings::IniFormat);
@@ -404,9 +404,9 @@ void MainWindow::on_btnExp_clicked()
 void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox aboutBox(this);
-    aboutBox.setWindowTitle(tr("关于 MySSCOM"));
+    aboutBox.setWindowTitle(tr("关于 NCTools"));
     aboutBox.setIconPixmap(QPixmap(":/control.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    aboutBox.setText(tr("<h3>MySSCOM</h3>"
+    aboutBox.setText(tr("<h3>NCTools</h3>"
                        "<p>版本 1.0</p>"
                        "<p>串口网络调试工具</p>"
                        "<p>支持串口、TCP Server、TCP Client、UDP 通信</p>"

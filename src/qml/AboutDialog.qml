@@ -1,11 +1,11 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import MySSCOM 1.0
+import NCTools 1.0
 
 Dialog {
     id: root
-    title: "关于 MySSCOM"
+    title: "关于 NCTools"
     modal: true
     standardButtons: Dialog.Ok
     anchors.centerIn: parent
@@ -21,7 +21,7 @@ Dialog {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            text: "MySSCOM"
+            text: "NCTools"
             font.pixelSize: 18
             font.bold: true
         }
