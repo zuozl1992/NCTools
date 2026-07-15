@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
     // 创建QML引擎
     QQmlApplicationEngine engine;
 
+    // 先加载设置
+    SettingsManager::instance()->load();
+
     // 初始化语言管理器
     LanguageManager::instance()->init(&app, &engine);
 

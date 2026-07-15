@@ -28,9 +28,6 @@ AppController::AppController(QObject *parent)
     connect(m_fileSendTimer, &QTimer::timeout,
             this, &AppController::onFileSendTimer);
 
-    // 加载设置
-    SettingsManager::instance()->load();
-
     // 加载快速发送条目
     QVariantList entries = SettingsManager::instance()->quickSendEntries();
     if (!entries.isEmpty()) {
