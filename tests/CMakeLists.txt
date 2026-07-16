@@ -5,7 +5,7 @@ qt_add_executable(test_dataprocessor
     test_dataprocessor.cpp
 )
 target_link_libraries(test_dataprocessor PRIVATE
-    mysscom_core
+    nctools_core
     Qt6::Test
 )
 target_include_directories(test_dataprocessor PRIVATE
@@ -18,7 +18,7 @@ qt_add_executable(test_settingsmanager
     test_settingsmanager.cpp
 )
 target_link_libraries(test_settingsmanager PRIVATE
-    mysscom_core
+    nctools_core
     Qt6::Test
 )
 target_include_directories(test_settingsmanager PRIVATE
@@ -31,7 +31,7 @@ qt_add_executable(test_transportfactory
     test_transportfactory.cpp
 )
 target_link_libraries(test_transportfactory PRIVATE
-    mysscom_core
+    nctools_core
     Qt6::Test
 )
 target_include_directories(test_transportfactory PRIVATE

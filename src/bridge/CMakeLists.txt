@@ -1,6 +1,6 @@
 # Bridge library - connects core to QML
 
-add_library(mysscom_bridge STATIC
+add_library(nctools_bridge STATIC
     transportcontroller.h
     transportcontroller.cpp
     quicksendmodel.h
@@ -9,12 +9,12 @@ add_library(mysscom_bridge STATIC
     appcontroller.cpp
 )
 
-target_include_directories(mysscom_bridge PUBLIC
+target_include_directories(nctools_bridge PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(mysscom_bridge PUBLIC
+target_link_libraries(nctools_bridge PUBLIC
     Qt6::Core
     Qt6::Qml
-    mysscom_core
+    nctools_core
 )

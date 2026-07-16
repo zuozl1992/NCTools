@@ -52,8 +52,8 @@ target_link_libraries(NCTools PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
-    mysscom_core
-    mysscom_bridge
+    nctools_core
+    nctools_bridge
 )
 
 install(TARGETS NCTools

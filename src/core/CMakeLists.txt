@@ -1,6 +1,6 @@
 # Core library - no UI dependency
 
-add_library(mysscom_core STATIC
+add_library(nctools_core STATIC
     # DataProcessor
     dataprocessor/dataprocessor.h
     dataprocessor/dataprocessor.cpp
@@ -27,11 +27,11 @@ add_library(mysscom_core STATIC
     transport/udptransport.cpp
 )
 
-target_include_directories(mysscom_core PUBLIC
+target_include_directories(nctools_core PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-target_link_libraries(mysscom_core PUBLIC
+target_link_libraries(nctools_core PUBLIC
     Qt6::Core
     Qt6::Gui
     Qt6::Qml
