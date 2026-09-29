@@ -80,6 +80,7 @@ void SettingsManager::save()
         settings.setValue(QString("hex_%1").arg(i), entry["hex"].toBool());
     }
     settings.endGroup();
+    settings.sync();
 }
 
 void SettingsManager::load()

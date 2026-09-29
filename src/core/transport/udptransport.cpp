@@ -54,6 +54,8 @@ bool UdpTransport::sendData(const QByteArray &data)
 
     // UDP发送不需要绑定本地端口，直接发送即可
     qint64 len = m_socket->writeDatagram(data, QHostAddress(m_config.peerHost), m_config.peerPort);
+    if (len < 0)
+        emit errorOccurred(m_socket->errorString());
     return len == data.size();
 }
 
@@ -64,11 +66,18 @@ QString UdpTransport::errorString() const
 
 void UdpTransport::onReadyRead()
 {
-    // 读取数据报
-    char buf[2048];
-    qint64 len = m_socket->readDatagram(buf, 2048);
-    if (len > 0) {
-        QByteArray data(buf, len);
+    while (m_socket->hasPendingDatagrams()) {
+        const qint64 size = m_socket->pendingDatagramSize();
+        if (size < 0)
+            return;
+
+        QByteArray data(size, Qt::Uninitialized);
+        const qint64 received = m_socket->readDatagram(data.data(), data.size());
+        if (received < 0) {
+            emit errorOccurred(m_socket->errorString());
+            return;
+        }
+        data.resize(received);
         emit dataReceived(data);
     }
 }

@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     app.setWindowIcon(QIcon(":/control.png"));
     app.setApplicationName("NCTools");
-    app.setApplicationVersion("2.0");
+    app.setApplicationVersion("2.1.0");
 
     // 设置QML样式
     QQuickStyle::setStyle("Basic");

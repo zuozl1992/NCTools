@@ -68,7 +68,7 @@ Rectangle {
         Item { Layout.fillWidth: true }
 
         Label {
-            text: "NCTools v2.0"
+            text: "NCTools v2.1.0"
             font.pixelSize: 11
             color: "#666666"
         }

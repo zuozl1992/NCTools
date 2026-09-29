@@ -54,7 +54,14 @@ bool TcpClientTransport::sendData(const QByteArray &data)
     }
 
     qint64 len = m_socket->write(data);
+    if (len < 0)
+        emit errorOccurred(m_socket->errorString());
     return len == data.size();
+}
+
+qint64 TcpClientTransport::pendingBytes() const
+{
+    return m_socket->bytesToWrite();
 }
 
 QString TcpClientTransport::errorString() const

@@ -61,7 +61,14 @@ bool SerialTransport::sendData(const QByteArray &data)
     }
 
     qint64 len = m_serial->write(data);
+    if (len < 0)
+        emit errorOccurred(m_serial->errorString());
     return len == data.size();
+}
+
+qint64 SerialTransport::pendingBytes() const
+{
+    return m_serial->bytesToWrite();
 }
 
 QString SerialTransport::errorString() const

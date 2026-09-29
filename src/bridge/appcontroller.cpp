@@ -6,6 +6,10 @@
 #include <QTextStream>
 #include <QUrl>
 
+namespace {
+bool validPort(int port) { return port >= 1 && port <= 65535; }
+}
+
 AppController::AppController(QObject *parent)
     : QObject(parent)
     , m_transport(new TransportController(this))
@@ -34,8 +38,11 @@ AppController::AppController(QObject *parent)
         m_quickSendModel->loadFromVariantList(entries);
     }
 
-    // 初始化串口通信
-    switchToTransport(0);
+    m_connectionType = SettingsManager::instance()->connectionType();
+    if (m_connectionType < 0 || m_connectionType > 3)
+        m_connectionType = 0;
+    // 恢复上次模式，但不自动打开设备或端口。
+    switchToTransport(m_connectionType);
 }
 
 AppController::~AppController()
@@ -54,6 +61,7 @@ bool AppController::isConnected() const
 void AppController::setConnectionType(int type)
 {
     if (m_connectionType != type) {
+        stopAutoSend();
         m_connectionType = type;
         switchToTransport(type);
         SettingsManager::instance()->setConnectionType(type);
@@ -62,12 +70,12 @@ void AppController::setConnectionType(int type)
     }
 }
 
-void AppController::sendData(const QString &text, bool hexMode)
+bool AppController::sendData(const QString &text, bool hexMode)
 {
     if (text.isEmpty()) {
         emit errorMessage(tr("发送框为空"));
         stopAutoSend();
-        return;
+        return false;
     }
 
     // 缓存发送内容（用于自动发送）
@@ -103,6 +111,7 @@ void AppController::sendData(const QString &text, bool hexMode)
     }
 
     emit sendStatusChanged(ok);
+    return ok;
 }
 
 void AppController::sendQuickSendData(int row)
@@ -124,6 +133,8 @@ void AppController::sendQuickSendData(int row)
     // 发送数据
     bool ok = m_transport->sendData(sendData);
     if (ok) {
+        m_sentBytes += sendData.size();
+        emit sentBytesChanged();
         // 显示发送的数据
         bool hexShow = SettingsManager::instance()->hexShow();
         bool addTime = SettingsManager::instance()->addTimestamp();
@@ -170,6 +181,7 @@ void AppController::loadAndSendFile(const QUrl &url)
 
     // 关闭之前正在发送的文件
     if (m_sendingFile) {
+        m_fileSendTimer->stop();
         m_sendingFile->close();
         delete m_sendingFile;
         m_sendingFile = nullptr;
@@ -188,6 +200,11 @@ void AppController::loadAndSendFile(const QUrl &url)
     QFileInfo info(path);
     m_fileSize = info.size();
     m_fileSentSize = 0;
+    m_fileTransport = m_transport->currentTransport();
+    m_fileInitiallyConnected = m_transport->isConnected();
+    m_fileReadComplete = false;
+    m_fileSendFailed = false;
+    m_fileClientCount = m_transport->clientCount();
 
     // 显示发送开始提示
     QString msg = tr("[文件发送开始] %1 (%2 字节)").arg(info.fileName()).arg(m_fileSize);
@@ -234,6 +251,10 @@ void AppController::addManualPort(const QString &portName)
 
 bool AppController::openSerialPort(const QString &portName, int baudRate)
 {
+    if (portName.isEmpty() || baudRate <= 0) {
+        emit errorMessage(tr("串口参数无效"));
+        return false;
+    }
     // 配置串口参数
     SerialConfig config;
     config.portName = portName;
@@ -256,6 +277,10 @@ bool AppController::openSerialPort(const QString &portName, int baudRate)
 
 bool AppController::startTcpServer(int port)
 {
+    if (!validPort(port)) {
+        emit errorMessage(tr("监听端口必须在1到65535之间"));
+        return false;
+    }
     // 配置TCP服务器参数
     TcpServerConfig config;
     config.listenPort = port;
@@ -274,6 +299,10 @@ bool AppController::startTcpServer(int port)
 
 bool AppController::connectTcpClient(const QString &host, int port)
 {
+    if (host.trimmed().isEmpty() || !validPort(port)) {
+        emit errorMessage(tr("服务器地址或端口无效"));
+        return false;
+    }
     // 配置TCP客户端参数
     TcpClientConfig config;
     config.host = host;
@@ -294,6 +323,10 @@ bool AppController::connectTcpClient(const QString &host, int port)
 
 bool AppController::bindUdp(int localPort)
 {
+    if (!validPort(localPort)) {
+        emit errorMessage(tr("本地端口必须在1到65535之间"));
+        return false;
+    }
     // 配置UDP参数
     UdpConfig config;
     config.localPort = localPort;
@@ -314,6 +347,7 @@ bool AppController::bindUdp(int localPort)
 
 void AppController::closeConnection()
 {
+    stopAutoSend();
     m_transport->closeCurrent();
     emit connectedChanged();
     clearStatistics();
@@ -321,8 +355,9 @@ void AppController::closeConnection()
 
 void AppController::startAutoSend(int intervalMs)
 {
-    if (intervalMs <= 0) {
+    if (intervalMs <= 0 || m_lastSendText.isEmpty()) {
         emit errorMessage(tr("请输入时间"));
+        stopAutoSend();
         return;
     }
 
@@ -332,11 +367,13 @@ void AppController::startAutoSend(int intervalMs)
 
     // 启动定时器
     m_autoSendTimer->start(intervalMs);
+    emit autoSendRunningChanged();
 }
 
 void AppController::stopAutoSend()
 {
     m_autoSendTimer->stop();
+    emit autoSendRunningChanged();
 }
 
 void AppController::clearStatistics()
@@ -374,6 +411,8 @@ void AppController::onConnectedChanged()
 
 void AppController::onErrorOccurred(const QString &message)
 {
+    if (m_sendingFile && m_fileTransport == m_transport->currentTransport())
+        m_fileSendFailed = true;
     emit errorMessage(message);
 }
 
@@ -392,11 +431,14 @@ void AppController::onFileSendTimer()
 
 void AppController::appendToDisplay(const QString &text)
 {
+    constexpr qsizetype maxDisplayChars = 1024 * 1024;
     if (SettingsManager::instance()->addTimestamp()) {
         m_displayText += text + "\n";
     } else {
         m_displayText += text;
     }
+    if (m_displayText.size() > maxDisplayChars)
+        m_displayText.remove(0, m_displayText.size() - maxDisplayChars);
     emit displayTextChanged(m_displayText);
 }
 
@@ -452,6 +494,8 @@ void AppController::switchToTransport(int typeIndex)
 
     // 切换通信对象
     m_transport->switchTransport(type, config);
+    if (type == TransportType::Serial)
+        m_transport->refreshPorts();
 }
 
 void AppController::sendNextFileChunk()
@@ -461,44 +505,44 @@ void AppController::sendNextFileChunk()
         return;
     }
 
+    if (!m_fileTransport || m_fileTransport != m_transport->currentTransport()
+        || m_fileSendFailed || (m_fileInitiallyConnected && !m_fileTransport->isConnected())
+        || (m_connectionType == 1 && m_transport->clientCount() < m_fileClientCount)) {
+        finishFileSend(false);
+        return;
+    }
+
+    if (m_fileReadComplete) {
+        if (m_fileTransport->pendingBytes() == 0)
+            finishFileSend(true);
+        return;
+    }
+
+    // 等待发送队列消化，避免慢速对端导致内存无限增长。
+    if (m_fileTransport->pendingBytes() >= 64 * 1024)
+        return;
+
     // 每次发送1KB数据
     const int chunkSize = 1024;
     char buf[chunkSize];
 
     qint64 l = m_sendingFile->read(buf, chunkSize);
-    if (l <= 0) {
-        // 文件发送完成
-        m_fileSendTimer->stop();
-        m_sendingFile->close();
-        delete m_sendingFile;
-        m_sendingFile = nullptr;
-
-        QString msg = tr("[文件发送完成] 共发送 %1 字节").arg(m_fileSentSize);
-        bool addTime = SettingsManager::instance()->addTimestamp();
-        if (addTime) {
-            msg = DataProcessor::appendTimestamp(msg, true);
-        }
-        appendToDisplay(msg);
-        emit fileProgressChanged(100);
+    if (l < 0) {
+        finishFileSend(false);
+        return;
+    }
+    if (l == 0) {
+        m_fileReadComplete = true;
+        if (m_fileTransport->pendingBytes() == 0)
+            finishFileSend(true);
         return;
     }
 
     // 发送数据块
     QByteArray data(buf, l);
     bool ok = m_transport->sendData(data);
-    if (!ok) {
-        // 发送失败
-        m_fileSendTimer->stop();
-        m_sendingFile->close();
-        delete m_sendingFile;
-        m_sendingFile = nullptr;
-
-        QString msg = tr("[文件发送失败] 已发送 %1 / %2 字节").arg(m_fileSentSize).arg(m_fileSize);
-        bool addTime = SettingsManager::instance()->addTimestamp();
-        if (addTime) {
-            msg = DataProcessor::appendTimestamp(msg, true);
-        }
-        appendToDisplay(msg);
+    if (!ok || m_fileSendFailed) {
+        finishFileSend(false);
         return;
     }
 
@@ -509,5 +553,22 @@ void AppController::sendNextFileChunk()
     // 更新进度
     m_fileSentSize += l;
     int pos = static_cast<int>(m_fileSentSize * 100 / m_fileSize);
-    emit fileProgressChanged(pos);
+    emit fileProgressChanged(qMin(pos, 99));
+}
+
+void AppController::finishFileSend(bool success)
+{
+    m_fileSendTimer->stop();
+    m_sendingFile->close();
+    delete m_sendingFile;
+    m_sendingFile = nullptr;
+    m_fileTransport.clear();
+
+    QString msg = success
+        ? tr("[文件发送完成] 共发送 %1 字节").arg(m_fileSentSize)
+        : tr("[文件发送失败] 已发送 %1 / %2 字节").arg(m_fileSentSize).arg(m_fileSize);
+    if (SettingsManager::instance()->addTimestamp())
+        msg = DataProcessor::appendTimestamp(msg, true);
+    appendToDisplay(msg);
+    emit fileProgressChanged(success ? 100 : -1);
 }

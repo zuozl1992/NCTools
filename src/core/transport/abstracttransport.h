@@ -42,6 +42,9 @@ public:
      */
     virtual bool sendData(const QByteArray &data) = 0;
 
+    /// 已接受写入但尚未交给设备或操作系统的字节数
+    virtual qint64 pendingBytes() const { return 0; }
+
     /**
      * @brief 获取错误信息
      * @return 错误描述字符串

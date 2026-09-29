@@ -330,8 +330,8 @@
         <translation>NCTools</translation>
     </message>
     <message>
-        <source>版本 2.0</source>
-        <translation>版本 2.0</translation>
+        <source>版本 2.1.0</source>
+        <translation>版本 2.1.0</translation>
     </message>
     <message>
         <source>串口网络调试工具</source>

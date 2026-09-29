@@ -37,7 +37,7 @@ Dialog {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            text: tr("版本 2.0")
+            text: tr("版本 2.1.0")
             font.pixelSize: 13
         }
 

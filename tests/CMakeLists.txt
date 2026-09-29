@@ -1,5 +1,3 @@
-enable_testing()
-
 # DataProcessor test
 qt_add_executable(test_dataprocessor
     test_dataprocessor.cpp
@@ -32,9 +30,29 @@ qt_add_executable(test_transportfactory
 )
 target_link_libraries(test_transportfactory PRIVATE
     nctools_core
+    nctools_bridge
     Qt6::Test
 )
 target_include_directories(test_transportfactory PRIVATE
     ${CMAKE_SOURCE_DIR}/src/core
+    ${CMAKE_SOURCE_DIR}/src/bridge
 )
 add_test(NAME transportfactory COMMAND test_transportfactory)
+
+qt_add_executable(test_appcontroller test_appcontroller.cpp)
+target_link_libraries(test_appcontroller PRIVATE nctools_bridge Qt6::Test)
+target_include_directories(test_appcontroller PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/core
+    ${CMAKE_SOURCE_DIR}/src/bridge
+)
+add_test(NAME appcontroller COMMAND test_appcontroller)
+
+qt_add_executable(test_qmlflows test_qmlflows.cpp)
+target_link_libraries(test_qmlflows PRIVATE nctools_bridge Qt6::Test Qt6::Quick Qt6::QuickControls2)
+target_include_directories(test_qmlflows PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/core
+    ${CMAKE_SOURCE_DIR}/src/bridge
+)
+target_compile_definitions(test_qmlflows PRIVATE NCTOOLS_APP_SOURCE_DIR="${CMAKE_SOURCE_DIR}/src/app")
+add_test(NAME qmlflows COMMAND test_qmlflows)
+set_tests_properties(qmlflows PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen")

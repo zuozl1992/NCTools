@@ -29,6 +29,7 @@ public:
     void close() override;                                ///< 停止服务器
     bool isConnected() const override;                    ///< 是否正在监听
     bool sendData(const QByteArray &data) override;       ///< 广播数据到所有客户端
+    qint64 pendingBytes() const override;
     QString errorString() const override;                 ///< 获取错误信息
 
     /**

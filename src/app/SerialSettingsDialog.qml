@@ -37,9 +37,10 @@ Dialog {
 
             ComboBox {
                 id: cbData
+                objectName: "serialDataBits"
                 Layout.fillWidth: true
                 model: ["5", "6", "7", "8"]
-                currentIndex: 3
+                currentIndex: [5, 6, 7, 8].indexOf(AppController.settings.serialDataBits)
             }
         }
 
@@ -53,9 +54,10 @@ Dialog {
 
             ComboBox {
                 id: cbStop
+                objectName: "serialStopBits"
                 Layout.fillWidth: true
                 model: ["1", "1.5", "2"]
-                currentIndex: 0
+                currentIndex: [1, 3, 2].indexOf(AppController.settings.serialStopBits)
             }
         }
 
@@ -69,12 +71,13 @@ Dialog {
 
             ComboBox {
                 id: cbParity
+                objectName: "serialParity"
                 Layout.fillWidth: true
                 model: {
                     var _ = LanguageManager.currentLanguage
                     return [qsTr("无"), qsTr("偶校验"), qsTr("奇校验"), qsTr("空格"), qsTr("标记")]
                 }
-                currentIndex: 0
+                currentIndex: [0, 2, 3, 4, 5].indexOf(AppController.settings.serialParity)
             }
         }
 
@@ -88,12 +91,13 @@ Dialog {
 
             ComboBox {
                 id: cbFlow
+                objectName: "serialFlowControl"
                 Layout.fillWidth: true
                 model: {
                     var _ = LanguageManager.currentLanguage
                     return [qsTr("无"), qsTr("硬件"), qsTr("软件")]
                 }
-                currentIndex: 0
+                currentIndex: [0, 1, 2].indexOf(AppController.settings.serialFlowControl)
             }
         }
     }
@@ -114,4 +118,15 @@ Dialog {
         AppController.settings.serialParity = root.parity
         AppController.settings.serialFlowControl = root.flowControl
     }
+
+    onOpened: {
+        cbData.currentIndex = dataMapIndex(AppController.settings.serialDataBits)
+        cbStop.currentIndex = stopMapIndex(AppController.settings.serialStopBits)
+        cbParity.currentIndex = parityMapIndex(AppController.settings.serialParity)
+        cbFlow.currentIndex = AppController.settings.serialFlowControl
+    }
+
+    function dataMapIndex(value) { return [5, 6, 7, 8].indexOf(value) }
+    function stopMapIndex(value) { return [1, 3, 2].indexOf(value) }
+    function parityMapIndex(value) { return [0, 2, 3, 4, 5].indexOf(value) }
 }

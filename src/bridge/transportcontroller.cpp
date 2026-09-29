@@ -1,6 +1,9 @@
 #include "transportcontroller.h"
 #include "transport/transportfactory.h"
 #include "transport/serialtransport.h"
+#include "transport/tcpservertransport.h"
+#include "transport/tcpclienttransport.h"
+#include "transport/udptransport.h"
 
 TransportController::TransportController(QObject *parent)
     : QObject(parent)
@@ -31,8 +34,19 @@ void TransportController::switchTransport(TransportType type, const TransportCon
                 if (auto *serial = dynamic_cast<SerialTransport *>(m_currentTransport.get())) {
                     serial->setConfig(cfg);
                 }
+            } else if constexpr (std::is_same_v<T, TcpServerConfig>) {
+                if (auto *server = dynamic_cast<TcpServerTransport *>(m_currentTransport.get())) {
+                    server->setConfig(cfg);
+                }
+            } else if constexpr (std::is_same_v<T, TcpClientConfig>) {
+                if (auto *client = dynamic_cast<TcpClientTransport *>(m_currentTransport.get())) {
+                    client->setConfig(cfg);
+                }
+            } else if constexpr (std::is_same_v<T, UdpConfig>) {
+                if (auto *udp = dynamic_cast<UdpTransport *>(m_currentTransport.get())) {
+                    udp->setConfig(cfg);
+                }
             }
-            // 其他配置通过工厂应用
         }, config);
     }
 }
@@ -43,6 +57,7 @@ void TransportController::closeCurrent()
         m_currentTransport->close();
         m_currentTransport.reset();
         emit connectedChanged();
+        emit clientCountChanged();
     }
 }
 
@@ -79,7 +94,8 @@ void TransportController::refreshPorts()
 
 int TransportController::clientCount() const
 {
-    // TODO: TCP服务器客户端计数
+    if (auto *server = dynamic_cast<TcpServerTransport *>(m_currentTransport.get()))
+        return server->clientCount();
     return 0;
 }
 
@@ -100,5 +116,10 @@ void TransportController::connectTransportSignals()
     if (auto *serial = dynamic_cast<SerialTransport *>(m_currentTransport.get())) {
         connect(serial, &SerialTransport::availablePortsChanged,
                 this, &TransportController::availablePortsChanged);
+    }
+
+    if (auto *server = dynamic_cast<TcpServerTransport *>(m_currentTransport.get())) {
+        connect(server, &TcpServerTransport::clientCountChanged,
+                this, &TransportController::clientCountChanged);
     }
 }

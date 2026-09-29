@@ -27,6 +27,7 @@ public:
     void close() override;                                ///< 断开连接
     bool isConnected() const override;                    ///< 是否已连接
     bool sendData(const QByteArray &data) override;       ///< 发送数据
+    qint64 pendingBytes() const override;
     QString errorString() const override;                 ///< 获取错误信息
 
 private slots:

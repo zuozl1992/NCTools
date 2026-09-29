@@ -54,6 +54,12 @@ Rectangle {
     Connections {
         target: AppController
         function onFileProgressChanged(percent) {
+            if (percent < 0) {
+                hideTimer.stop()
+                progressBar.value = 0
+                root.sending = false
+                return
+            }
             if (percent >= 0 && percent <= 100) {
                 root.sending = true
                 progressBar.value = percent

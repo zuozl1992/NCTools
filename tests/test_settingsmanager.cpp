@@ -1,7 +1,8 @@
 #include <QtTest>
 #include <QCoreApplication>
-#include <QTemporaryDir>
 #include <QSettings>
+#include <QStandardPaths>
+#include <QFileInfo>
 #include "settings/settingsmanager.h"
 
 class TestSettingsManager : public QObject
@@ -10,7 +11,6 @@ class TestSettingsManager : public QObject
 
 private slots:
     void initTestCase();
-    void cleanupTestCase();
     void testDefaultValues();
     void testSerialSettings();
     void testTcpServerSettings();
@@ -21,19 +21,13 @@ private slots:
     void testQuickSendEntries();
     void testSaveLoad();
 
-private:
-    QTemporaryDir *m_tempDir;
 };
 
 void TestSettingsManager::initTestCase()
 {
-    m_tempDir = new QTemporaryDir;
-    QVERIFY(m_tempDir->isValid());
-}
-
-void TestSettingsManager::cleanupTestCase()
-{
-    delete m_tempDir;
+    QStandardPaths::setTestModeEnabled(true);
+    const QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QVERIFY(configPath.contains("qttest"));
 }
 
 void TestSettingsManager::testDefaultValues()
@@ -235,16 +229,15 @@ void TestSettingsManager::testQuickSendEntries()
 
 void TestSettingsManager::testSaveLoad()
 {
-    // This test verifies the save/load mechanism works
-    // In a real test, we would need to mock QStandardPaths
-    // For now, we just verify the API exists and can be called
     SettingsManager *settings = SettingsManager::instance();
-
-    // Save should not crash
+    settings->setTcpServerPort("49152");
     settings->save();
-
-    // Load should not crash
+    const QString configPath = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)
+                               + "/NCTools/config.ini";
+    QVERIFY(QFileInfo::exists(configPath));
+    settings->setTcpServerPort("1");
     settings->load();
+    QCOMPARE(settings->tcpServerPort(), QString("49152"));
 }
 
 QTEST_MAIN(TestSettingsManager)

@@ -6,6 +6,8 @@ import NCTools 1.0
 
 ApplicationWindow {
     id: root
+    property alias autoSendCheckBoxObject: cbAutoSend
+    property alias autoSendIntervalObject: leInterval
     width: 1100
     height: 700
     visible: true
@@ -175,12 +177,13 @@ ApplicationWindow {
 
                     CheckBox {
                         id: cbAutoSend
+                        objectName: "autoSendCheckBox"
                         text: {
                             var _ = LanguageManager.currentLanguage
                             return qsTr("定时发送")
                         }
-                        checked: AppController.settings.autoSend
-                        onCheckedChanged: {
+                        checked: AppController.autoSendRunning
+                        onClicked: {
                             AppController.settings.autoSend = checked
                             if (checked) {
                                 AppController.startAutoSend(parseInt(leInterval.text))
@@ -190,8 +193,17 @@ ApplicationWindow {
                         }
                     }
 
+                    Connections {
+                        target: AppController
+                        function onAutoSendRunningChanged() {
+                            cbAutoSend.checked = AppController.autoSendRunning
+                            AppController.settings.autoSend = AppController.autoSendRunning
+                        }
+                    }
+
                     TextField {
                         id: leInterval
+                        objectName: "autoSendInterval"
                         Layout.preferredWidth: 80
                         text: AppController.settings.autoSendInterval.toString()
                         placeholderText: "ms"

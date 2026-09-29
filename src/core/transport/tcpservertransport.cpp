@@ -35,6 +35,7 @@ void TcpServerTransport::close()
     // 断开所有客户端连接
     foreach (QTcpSocket *client, m_clients) {
         client->disconnectFromHost();
+        client->deleteLater();
     }
     m_clients.clear();
 
@@ -62,9 +63,19 @@ bool TcpServerTransport::sendData(const QByteArray &data)
         qint64 len = client->write(data);
         if (len != data.size()) {
             allSuccess = false;
+            if (len < 0)
+                emit errorOccurred(client->errorString());
         }
     }
     return allSuccess;
+}
+
+qint64 TcpServerTransport::pendingBytes() const
+{
+    qint64 pending = 0;
+    for (const QTcpSocket *client : m_clients)
+        pending += client->bytesToWrite();
+    return pending;
 }
 
 QString TcpServerTransport::errorString() const
@@ -132,6 +143,7 @@ void TcpServerTransport::onClientDisconnected()
     if (socket) {
         disconnect(socket, nullptr, nullptr, nullptr);
         m_clients.removeOne(socket);
+        socket->deleteLater();
         emit clientCountChanged();
     }
 }

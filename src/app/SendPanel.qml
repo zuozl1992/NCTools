@@ -28,6 +28,7 @@ Rectangle {
 
             TextArea {
                 id: teSendData
+                objectName: "sendTextArea"
                 wrapMode: TextArea.Wrap
                 placeholderText: AppController.settings.hexSend ? tr("输入HEX数据，如: 48 65 6C 6C 6F") : tr("输入要发送的数据...")
                 font.pixelSize: 13
@@ -66,6 +67,7 @@ Rectangle {
         }
 
         Button {
+            objectName: "sendButton"
             Layout.preferredWidth: 80
             Layout.fillHeight: true
             text: tr("发送")
@@ -82,8 +84,8 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
             }
             onClicked: {
-                AppController.sendData(teSendData.text, AppController.settings.hexSend)
-                if (AppController.settings.autoClearSend) {
+                var sent = AppController.sendData(teSendData.text, AppController.settings.hexSend)
+                if (sent && AppController.settings.autoClearSend) {
                     teSendData.clear()
                 }
             }

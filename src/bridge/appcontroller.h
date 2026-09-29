@@ -4,6 +4,7 @@
 #include <QUrl>
 #include <QTimer>
 #include <QFile>
+#include <QPointer>
 #include "transportcontroller.h"
 #include "quicksendmodel.h"
 #include "settings/settingsmanager.h"
@@ -27,6 +28,7 @@ class AppController : public QObject
     Q_PROPERTY(int connectionType READ connectionType WRITE setConnectionType NOTIFY connectionTypeChanged) ///< 连接类型
     Q_PROPERTY(qint64 sentBytes READ sentBytes NOTIFY sentBytesChanged)        ///< 已发送字节数
     Q_PROPERTY(qint64 receivedBytes READ receivedBytes NOTIFY receivedBytesChanged) ///< 已接收字节数
+    Q_PROPERTY(bool autoSendRunning READ autoSendRunning NOTIFY autoSendRunningChanged)
 
 public:
     explicit AppController(QObject *parent = nullptr);
@@ -45,9 +47,10 @@ public:
     void setConnectionType(int type);
     qint64 sentBytes() const { return m_sentBytes; }
     qint64 receivedBytes() const { return m_receivedBytes; }
+    bool autoSendRunning() const { return m_autoSendTimer->isActive(); }
 
     // ---- 数据发送 ----
-    Q_INVOKABLE void sendData(const QString &text, bool hexMode);     ///< 发送数据
+    Q_INVOKABLE bool sendData(const QString &text, bool hexMode);     ///< 发送数据
     Q_INVOKABLE void sendQuickSendData(int row);                      ///< 发送快速发送条目
     Q_INVOKABLE void loadAndSendFile(const QUrl &url);                ///< 加载并发送文件
 
@@ -85,6 +88,7 @@ signals:
     // ---- 统计相关 ----
     void sentBytesChanged();                                          ///< 发送字节数变更
     void receivedBytesChanged();                                      ///< 接收字节数变更
+    void autoSendRunningChanged();
 
 private slots:
     // ---- 异步回调 ----
@@ -99,6 +103,7 @@ private:
     void appendToDisplay(const QString &text);                        ///< 追加文本到显示区
     void switchToTransport(int typeIndex);                            ///< 切换通信类型
     void sendNextFileChunk();                                         ///< 发送下一个文件块
+    void finishFileSend(bool success);                                ///< 结束文件发送并通知界面
     void clearStatistics_internal();                                  ///< 内部清空统计
 
     // ==================== 服务组件 ====================
@@ -114,6 +119,11 @@ private:
     QFile *m_sendingFile = nullptr;                                   ///< 正在发送的文件
     qint64 m_fileSize = 0;                                            ///< 文件总大小
     qint64 m_fileSentSize = 0;                                        ///< 已发送文件大小
+    QPointer<AbstractTransport> m_fileTransport;
+    bool m_fileInitiallyConnected = false;
+    bool m_fileReadComplete = false;
+    bool m_fileSendFailed = false;
+    int m_fileClientCount = 0;
 
     // ==================== 统计计数 ====================
     qint64 m_sentBytes = 0;                                           ///< 发送字节总数
